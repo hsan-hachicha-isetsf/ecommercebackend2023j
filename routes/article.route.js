@@ -20,9 +20,9 @@ router.get('/productspage', async(req, res) => {
   const offset = (page - 1) * pagesize;
   try {
   // Effectuez la requête à votre source de données en utilisant les paramètres de pagination
-  const articles = await Article.find( {}, null, {sort: {'_id': -1}}).populate("scategorieID").exec()
+  const articles = await Article.find( {}, null, {sort: {'_id': -1}})
     .skip(offset)
-    .limit(pagesize)
+    .limit(pagesize).populate("scategorieID").exec()
    
   
     res.status(200).json(articles);
