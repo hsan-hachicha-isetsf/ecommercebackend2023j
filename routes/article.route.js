@@ -60,6 +60,7 @@ router.get('/:articleId',async(req, res)=>{
 
 router.put('/:articleId', async (req, res)=> {
    try {
+    
     const art = await Article.findByIdAndUpdate(
         req.params.articleId,
         { $set: req.body },
