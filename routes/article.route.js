@@ -13,6 +13,7 @@ router.get('/scat/:scategorieID',async(req, res)=>{
     }
 });
 
+
 // afficher la liste des articles.
 router.get('/', async (req, res, )=> {
     try {
@@ -24,6 +25,25 @@ router.get('/', async (req, res, )=> {
     }
 
 });
+// afficher la liste des articles par page
+router.get('/productspage', async(req, res) => {
+    const { page, pagesize } = req.query;
+  
+    // Calculez le nombre d'éléments à sauter (offset)
+    const offset = (page - 1) * pagesize;
+    try {
+    // Effectuez la requête à votre source de données en utilisant les paramètres de pagination
+    const articles = await Article.find( {}, null, {sort: {'_id': -1}})
+      .skip(offset)
+      .limit(pagesize)
+     
+    
+      res.status(200).json(articles);
+  } catch (error) {
+      res.status(404).json({ message: error.message });
+  }
+  });
+  
 
 // créer un nouvel article
 router.post('/', async (req, res) =>  { 
